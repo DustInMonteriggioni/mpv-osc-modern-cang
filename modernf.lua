@@ -66,7 +66,7 @@ local language = {
         nochapter = 'No chapters.',
     },
     ['chs'] = {
-        welcome = '{\\fs48}拖拽文件/文件夹/URL到此窗口播放',  -- this text appears when mpv starts
+        welcome = '{\\fs48}拖入文件/文件夹 或 通过右键打开',  -- this text appears when mpv starts
         off = '关闭',
         na = 'n/a',
         none = '无',
@@ -96,15 +96,15 @@ local osc_param = { -- calculated by osc_init()
 local osc_styles = {
     TransBg = '{\\blur100\\bord140\\1c&H000000&\\3c&H000000&}',
     SeekbarBg = '{\\blur0\\bord0\\1c&HFFFFFF&}',
-    SeekbarFg = '{\\blur1\\bord1\\1c&H7FFFD4&}',
+    SeekbarFg = '{\\blur1\\bord1\\1c&HFF974D&}',
     VolumebarBg = '{\\blur0\\bord0\\1c&H999999&}',
     VolumebarFg = '{\\blur1\\bord1\\1c&HFFFFFF&}',
     Ctrl1 = '{\\blur0\\bord0\\1c&HFFFFFF&\\3c&HFFFFFF&\\fs36\\fnmaterial-design-iconic-font}',
     Ctrl2 = '{\\blur0\\bord0\\1c&HFFFFFF&\\3c&HFFFFFF&\\fs28\\fnmaterial-design-iconic-font}',
     Ctrl3 = '{\\blur0\\bord0\\1c&HFFFFFF&\\3c&HFFFFFF&\\fs24\\fnmaterial-design-iconic-font}',
-    Time = '{\\blur0\\bord0\\1c&HFFFFFF&\\3c&H000000&\\fs17\\fn' .. user_opts.font .. '}',
-    Tooltip = '{\\blur1\\bord0.5\\1c&HFFFFFF&\\3c&H000000&\\fs18\\fn' .. user_opts.font .. '}',
-    Title = '{\\blur1\\bord0.5\\1c&HFFFFFF&\\3c&H0\\fs36\\q2\\fn' .. user_opts.font .. '}',
+    Time = '{\\blur0\\bord0\\1c&HFFFFFF&\\3c&H000000&\\fs22\\fn' .. user_opts.font .. '}',
+    Tooltip = '{\\blur1\\bord0.5\\1c&HFFFFFF&\\3c&H000000&\\fs20\\fn' .. user_opts.font .. '}',
+    Title = '{\\blur1\\bord1\\1c&HFFFFFF&\\3c&H0\\fs36\\q2\\fn' .. user_opts.font .. '}',
     WinCtrl = '{\\blur1\\bord0.5\\1c&HFFFFFF&\\3c&H0\\fs20\\fnmpv-osd-symbols}',
     elementDown = '{\\1c&H999999&}',
     wcBar = "{\\1c&H000000}",
@@ -1100,14 +1100,14 @@ layouts["reduced"] = function ()
     --
     new_element('seekbarbg', 'box')
     lo = add_layout('seekbarbg')
-    lo.geometry = {x = osc_geo.w / 2 , y = refY - 96 , an = 5, w = osc_geo.w - 50, h = 2}
+    lo.geometry = {x = osc_geo.w / 2 , y = refY - 105 , an = 5, w = osc_geo.w - 50, h = 2}
     lo.layer = 13
     lo.style = osc_styles.SeekbarBg
     lo.alpha[1] = 128
     lo.alpha[3] = 128
 
     lo = add_layout('seekbar')
-    lo.geometry = {x = osc_geo.w / 2 , y = refY - 96 , an = 5, w = osc_geo.w - 50, h = 16}
+    lo.geometry = {x = osc_geo.w / 2 , y = refY - 105 , an = 5, w = osc_geo.w - 50, h = 16}
     lo.style = osc_styles.SeekbarFg
     lo.slider.gap = 7
     lo.slider.tooltip_style = osc_styles.Tooltip
@@ -1118,12 +1118,12 @@ layouts["reduced"] = function ()
     lo = new_element('volumebarbg', 'box')
     lo.visible = (osc_param.playresx >= 750) and user_opts.volumecontrol
     lo = add_layout('volumebarbg')
-    lo.geometry = {x = osc_geo.w - 257, y = refY - 40, an = 4, w = 80, h = 2}
+    lo.geometry = {x = osc_geo.w - 207, y = refY - 40, an = 4, w = 80, h = 2}
     lo.layer = 13
     lo.style = osc_styles.VolumebarBg
     
     lo = add_layout('volumebar')
-    lo.geometry = {x = osc_geo.w - 257, y = refY - 40, an = 4, w = 80, h = 8}
+    lo.geometry = {x = osc_geo.w - 207, y = refY - 40, an = 4, w = 80, h = 8}
     lo.style = osc_styles.VolumebarFg
     lo.slider.gap = 3
     lo.slider.tooltip_style = osc_styles.Tooltip
@@ -1145,11 +1145,11 @@ layouts["reduced"] = function ()
 
     -- Time
     lo = add_layout('tc_left')
-    lo.geometry = {x = 25, y = refY - 84, an = 7, w = 64, h = 20}
+    lo.geometry = {x = 25, y = refY - 94, an = 7, w = 64, h = 20}
     lo.style = osc_styles.Time       
 
     lo = add_layout('tc_right')
-    lo.geometry = {x = osc_geo.w - 25 , y = refY -84, an = 9, w = 64, h = 20}
+    lo.geometry = {x = osc_geo.w - 25 , y = refY -94, an = 9, w = 64, h = 20}
     lo.style = osc_styles.Time    
 
     -- Option
@@ -1164,7 +1164,7 @@ layouts["reduced"] = function ()
     lo.visible = (osc_param.playresx >= 600)
 
     lo = add_layout('vol_ctrl')
-    lo.geometry = {x = osc_geo.w - 277, y = refY - 40, an = 5, w = 24, h = 24}
+    lo.geometry = {x = osc_geo.w - 227, y = refY - 40, an = 5, w = 24, h = 24}
     lo.style = osc_styles.Ctrl3
     lo.visible = (osc_param.playresx >= 650)
 
@@ -1174,20 +1174,24 @@ layouts["reduced"] = function ()
     lo.visible = (osc_param.playresx >= 500)
     
     lo = add_layout('ontop')
-    lo.geometry = {x = osc_geo.w - 137, y = refY - 40, an = 5, w = 24, h = 24}
-    lo.style = osc_styles.Ctrl3
-    lo.visible = (osc_param.playresx >= 600)
-
-    lo = add_layout('tog_info')
     lo.geometry = {x = osc_geo.w - 87, y = refY - 40, an = 5, w = 24, h = 24}
     lo.style = osc_styles.Ctrl3
     lo.visible = (osc_param.playresx >= 600)
+
+    -- lo = add_layout('ontop')
+    -- lo.geometry = {x = osc_geo.w - 137, y = refY - 40, an = 5, w = 24, h = 24}
+    -- lo.style = osc_styles.Ctrl3
+    -- lo.visible = (osc_param.playresx >= 600)    
+    -- lo = add_layout('tog_info')
+    -- lo.geometry = {x = osc_geo.w - 87, y = refY - 40, an = 5, w = 24, h = 24}
+    -- lo.style = osc_styles.Ctrl3
+    -- lo.visible = (osc_param.playresx >= 600)
     
-    geo = { x = 25, y = refY - 132, an = 1, w = osc_geo.w - 50, h = 48 }
+    geo = { x = 25, y = refY - 132, an = 1, w = osc_geo.w * 1.4, h = 48 }
     lo = add_layout('title')
     lo.geometry = geo
     lo.style = string.format('%s{\\clip(%f,%f,%f,%f)}', osc_styles.Title,
-                                geo.x, geo.y - geo.h, geo.x + geo.w , geo.y)
+                                geo.x, geo.y - geo.h, geo.x + geo.w, geo.y)
     lo.alpha[3] = 0
     lo.button.maxchars = geo.w / 23
 end
@@ -2332,42 +2336,42 @@ function show_logo()
     local logo_x, logo_y = osd_w/2, osd_h/2-20
     local ass = assdraw.ass_new()
     
-    ass:new_event()
-    ass:pos(logo_x, logo_y)
-    ass:append('{\\1c&HE5E5E5&\\3c&H0&\\3a&H60&\\blur1\\bord0.5}')
-    ass:draw_start()
-    ass_draw_cir_cw(ass, -2, 2, 108)
-    ass:draw_stop()
+    --ass:new_event()
+    --ass:pos(logo_x, logo_y)
+    --ass:append('{\\1c&HE5E5E5&\\3c&H0&\\3a&H60&\\blur1\\bord0.5}')
+    --ass:draw_start()
+    --ass_draw_cir_cw(ass, -2, 2, 108)
+    --ass:draw_stop()
     
-    ass:new_event()
-    ass:pos(logo_x, logo_y)
-    ass:append('{\\1c&H682167&\\3c&H0&\\3a&H60&\\blur1\\bord0.5}')
-    ass:draw_start()
-    ass_draw_cir_cw(ass, 0, 0, 100)
-    ass:draw_stop()
+    --ass:new_event()
+    --ass:pos(logo_x, logo_y)
+    --ass:append('{\\1c&H682167&\\3c&H0&\\3a&H60&\\blur1\\bord0.5}')
+    --ass:draw_start()
+    --ass_draw_cir_cw(ass, 0, 0, 100)
+    --ass:draw_stop()
     
-    ass:new_event()
-    ass:pos(logo_x, logo_y)
-    ass:append('{\\1c&H430142&\\bord0}')
-    ass:draw_start()
-    ass_draw_cir_cw(ass, 6, -6, 75)
-    ass:draw_stop()
+    --ass:new_event()
+    --ass:pos(logo_x, logo_y)
+    --ass:append('{\\1c&H430142&\\bord0}')
+    --ass:draw_start()
+    --ass_draw_cir_cw(ass, 6, -6, 75)
+    --ass:draw_stop()
 
-    ass:new_event()
-    ass:pos(logo_x, logo_y)
-    ass:append('{\\1c&HDDDBDD&\\bord0}')
-    ass:draw_start()
-    ass_draw_cir_cw(ass, -4, 4, 50)
-    ass:draw_stop()
+    --ass:new_event()
+    --ass:pos(logo_x, logo_y)
+    --ass:append('{\\1c&HDDDBDD&\\bord0}')
+    --ass:draw_start()
+    --ass_draw_cir_cw(ass, -4, 4, 50)
+    --ass:draw_stop()
         
-    ass:new_event()
-    ass:pos(logo_x, logo_y)
-    ass:append('{\\1c&H691F69&\\bord&}')
-    ass:draw_start()
-    ass:move_to(-20, -20)
-    ass:line_to(23.3, 5)
-    ass:line_to(-20, 30)
-    ass:draw_stop()
+    --ass:new_event()
+    --ass:pos(logo_x, logo_y)
+    --ass:append('{\\1c&H691F69&\\bord&}')
+    --ass:draw_start()
+    --ass:move_to(-20, -20)
+    --ass:line_to(23.3, 5)
+    --ass:line_to(-20, 30)
+    --ass:draw_stop()
     
     ass:new_event()
     ass:pos(logo_x, logo_y+140)
